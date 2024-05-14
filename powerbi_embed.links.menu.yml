@@ -1,0 +1,11 @@
+powerbi_embed.admin_config_powerbi_embed:
+  title: PowerBI Embed integration 
+  parent: system.admin_config
+  route_name: powerbi_embed.admin_config_powerbi_embed
+
+powerbi_embed_settings.admin_config_powerbi_embed:
+  title: PowerBI Embed settings
+  description: 'Settings for PowerBI Embed.'
+  parent: powerbi_embed.admin_config_powerbi_embed
+  route_name: powerbi_embed_settings.admin_config_powerbi_embed
+  weight: -10

@@ -1,0 +1,14 @@
+<div id="pbi-{{ field_name }}-{{ report_id }}"></div>
+<script>
+(function ($) {
+  var models = window["powerbi-client"].models;
+  var report = powerbi.embed($("#pbi-{{ field_name }}-{{ report_id }}").get(0), {
+    type: "report",
+    id: "{{ report_id }}",
+    embedUrl: "{{ embed_url }}",
+    accessToken:"{{ token }}",
+    tokenType: models.TokenType.Embed
+  });
+  powerbi_embed_customizeReportEmbed('pbi-{{ field_name }}-{{ report_id }}',{{ report_width }},{{ report_height }},'{{ report_title }}');
+})(jQuery);
+</script>

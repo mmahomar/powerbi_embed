@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Contains powerbi_embed.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function powerbi_embed_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the powerbi_embed module.
+    case 'help.page.powerbi_embed':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Integration with PowerBI Embed.') . '</p>';
+      return $output;
+
+    case 'powerbi_embed_settings.admin_config_powerbi_embed':
+      $output = '<p>' . t('All Microsoft support and development for ADAL, including security fixes, ends in June 2023.') . '</p>';
+      $output .= '<p>' . t('We strongly recommend you switching to MSAL.') . '</p>';
+      $output .= '<p>See <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-migration" target="_blank">Migrate applications to the Microsoft Authentication Library (MSAL)</a></p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function powerbi_embed_preprocess_page(&$variables) {
+  // Add Microsoft PowerBI JS client library.
+  $variables['#attached']['library'][] = 'powerbi_embed/powerbi_embed-client';
+  // Add module-specific JS customizations.
+  $variables['#attached']['library'][] = 'powerbi_embed/powerbi_embed-customizer';
+}

@@ -1,0 +1,14 @@
+powerbi_embed.admin_config_powerbi_embed:
+  path: '/admin/config/powerbi_embed'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'PowerBI Embed'
+  requirements:
+    _permission: 'administer site configuration'
+powerbi_embed_settings.admin_config_powerbi_embed:
+  path: '/admin/config/powerbi_embed/powerbi_embed'
+  defaults:
+    _title: 'PowerBI Embed Integration'
+    _form: '\Drupal\powerbi_embed\Form\PowerBIEmbedSettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

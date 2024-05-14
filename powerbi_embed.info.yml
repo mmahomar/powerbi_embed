@@ -1,0 +1,14 @@
+name: 'PowerBI Embed integration'
+description: 'Provides a field and settings for PowerBI Embed integration.' 
+type: module
+core_version_requirement: ^8 || ^9 || ^10
+package: 'Field types'
+dependencies:
+  - field
+  - node
+  - text
+
+# Information added by Drupal.org packaging script on 2023-01-17
+version: '1.0.x-dev'
+project: 'powerbi_embed'
+datestamp: 1673958189
