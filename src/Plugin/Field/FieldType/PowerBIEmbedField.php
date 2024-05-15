@@ -7,41 +7,18 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Class PowerBIEmbedField.
+ * Plugin implementation of the 'powerbi_embed' field type.
  *
  * @FieldType(
  *   id = "powerbi_embed",
- *   module = "powerbi_embed",
- *   label = @Translation("PowerBI Embed report"),
- *   category = @Translation("Reference"),
- *   description = @Translation("This field type stores PowerBI Embed report reference information."),
+ *   label = @Translation("PowerBI Embed"),
+ *   description = @Translation("A field to store PowerBI Embed report reference."),
  *   default_widget = "powerbi_embed_widget",
- *   default_formatter = "powerbi_embed_formatter",
- *   column_groups = {
- *     "report_id" = {
- *       "label" = @Translation("Report ID"),
- *       "translatable" = TRUE
- *     },
- *     "report_width" = {
- *       "label" = @Translation("Report width"),
- *       "translatable" = TRUE
- *     },
- *     "report_height" = {
- *       "label" = @Translation("Report height"),
- *       "translatable" = TRUE
- *     },
- *     "report_title" = {
- *       "label" = @Translation("Report title"),
- *       "translatable" = TRUE
- *     },
- *   },
+ *   default_formatter = "powerbi_embed_formatter"
  * )
  */
 class PowerBIEmbedField extends FieldItemBase {
 
-  /**
-   * {@inheritDoc}
-   */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
 
     $properties = [];
@@ -64,10 +41,7 @@ class PowerBIEmbedField extends FieldItemBase {
 
     return $properties;
   }
-
-  /**
-   * {@inheritDoc}
-   */
+    
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     $columns = [
       'report_id' => [
@@ -94,9 +68,6 @@ class PowerBIEmbedField extends FieldItemBase {
     return $schema;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   public function isEmpty() {
     $value = $this->get('report_id')->getValue();
 

@@ -19,9 +19,7 @@ function powerbi_embed_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     case 'powerbi_embed_settings.admin_config_powerbi_embed':
-      $output = '<p>' . t('All Microsoft support and development for ADAL, including security fixes, ends in June 2023.') . '</p>';
-      $output .= '<p>' . t('We strongly recommend you switching to MSAL.') . '</p>';
-      $output .= '<p>See <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-migration" target="_blank">Migrate applications to the Microsoft Authentication Library (MSAL)</a></p>';
+      $output = '<p>' . t('Power BI Embed Settings') . '</p>';
       return $output;
   }
 }

@@ -14,7 +14,7 @@ powerbi_embed-client:
     - core/once
 
 powerbi_embed-customizer:
-  remote: http://openplus.ca
+  #remote: http://cdn.jsdelivr.net/
   header: true
   version: 1.0.0
   license:
