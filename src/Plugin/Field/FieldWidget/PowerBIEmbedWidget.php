@@ -33,6 +33,14 @@ class PowerBIEmbedWidget extends WidgetBase {
         '#size' => 255,
       ];
 
+      $element['report_filter'] = [
+            '#type' => 'textfield',
+            '#title' => t('Report Filter'),
+            '#description' => t('Enter the filter string in the format "filter=Table/Column eq \'Value\'". Single quotes around the value are required.'),
+            '#default_value' => isset($items[$delta]->report_filter) ? $items[$delta]->report_filter : NULL,
+            '#size' => 255,
+        ];
+
       $element['report_width'] = [
         '#type' => 'textfield',
         '#title' => t('Report width'),
@@ -56,6 +64,18 @@ class PowerBIEmbedWidget extends WidgetBase {
         '#default_value' => isset($items[$delta]->report_title) ? $items[$delta]->report_title : NULL,
         '#size' => 255,
       ];
+
+      $element['filter_pane_enabled'] = [
+          '#type' => 'checkbox',
+          '#title' => t('Enable Filter Pane'),
+          '#default_value' => isset($items[$delta]->filter_pane_enabled) ? $items[$delta]->filter_pane_enabled : 1,
+        ];
+
+        $element['fullscreen_enabled'] = [
+          '#type' => 'checkbox',
+          '#title' => t('Enable Full Screen'),
+          '#default_value' => isset($items[$delta]->fullscreen_enabled) ? $items[$delta]->fullscreen_enabled : 1,
+        ];
 
       return $element;
     }

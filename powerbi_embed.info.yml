@@ -1,5 +1,5 @@
-name: 'PowerBI Embed integration'
-description: 'Provides a field and settings for PowerBI Embed integration.' 
+name: 'PowerBI Embedded Integration'
+description: 'Provides a field and settings for PowerBI Embedded integration.' 
 type: module
 core_version_requirement: ^8 || ^9 || ^10
 package: 'Field types'
@@ -7,5 +7,5 @@ dependencies:
   - field
   - node
   - text
-version: '1.0.x-custom'
+version: '1.3.x-custom'
 
