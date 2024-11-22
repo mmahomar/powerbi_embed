@@ -1,14 +1,72 @@
 <div id="pbi-{{ field_name }}-{{ report_id }}"></div>
+{% if fullscreen_enabled %}
+    <button id="fullscreen-button-{{ report_id }}">Full Screen</button>
+{% endif %}
 <script>
-
   var models = window["powerbi-client"].models;
-  var report = powerbi.embed($("#pbi-{{ field_name }}-{{ report_id }}").get(0), {
+
+  // Function to parse the report filter string
+  function parseReportFilter(filterStr) {
+  var filters = [];
+  // Remove 'filter=' if present
+  if (filterStr.startsWith('filter=')) {
+    filterStr = filterStr.substring(7);
+  }
+
+  // Handle multiple filters separated by ' and '
+  var filterExpressions = filterStr.split(' and ');
+  filterExpressions.forEach(function(expression) {
+    var parts = expression.split(' eq ');
+    if (parts.length === 2) {
+      var target = parts[0].split('/');
+      var table = target[0];
+      var column = target[1];
+      var value = parts[1].replace(/^'|'$/g, ''); // Remove quotes
+
+      var filter = {
+        $schema: "http://powerbi.com/product/schema#basic",
+        target: {
+          table: table,
+          column: column
+        },
+        operator: "In",
+        values: [value]
+      };
+
+      filters.push(filter);
+    }
+  });
+  return filters;
+}
+
+
+  var filters = [];
+
+  {% if report_filter %}
+    filters = parseReportFilter({{ report_filter|json_encode|raw }});
+  {% endif %}
+  
+  var embedSettings = {
+    filterPaneEnabled: false // Disable the Filter pane
+  };
+
+  var reportContainer = $("#pbi-{{ field_name }}-{{ report_id }}").get(0);
+  var report = powerbi.embed(reportContainer, {
     type: "report",
     id: "{{ report_id }}",
     embedUrl: "{{ embed_url }}",
-    accessToken:"{{ token }}",
-    tokenType: models.TokenType.Embed
+    accessToken: "{{ token }}",
+    tokenType: models.TokenType.Embed,
+    filters: filters,
+    settings: embedSettings
   });
-  powerbi_embed_customizeReportEmbed('pbi-{{ field_name }}-{{ report_id }}',{{ report_width }},{{ report_height }},'{{ report_title }}');
 
+  powerbi_embed_customizeReportEmbed('pbi-{{ field_name }}-{{ report_id }}', {{ report_width }}, {{ report_height }}, '{{ report_title }}');
+  
+  {% if fullscreen_enabled %}
+    $("#fullscreen-button-{{ report_id }}").on('click', function() {
+      report.fullscreen();
+    });
+  {% endif %}
+  
 </script>

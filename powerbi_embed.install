@@ -128,6 +128,16 @@ function powerbi_embed_update_8001() {
 }
 
 /**
+ * Adds new columns for filter pane and full-screen settings.
+ */
+function powerbi_embed_update_8002() {
+  _field_type_schema_column_add_helper('powerbi_embed', [
+    'filter_pane_enabled',
+    'fullscreen_enabled',
+  ]);
+}
+
+/**
  * Move existing configs to ADAL property.
  */
 function powerbi_embed_update_9100() {
