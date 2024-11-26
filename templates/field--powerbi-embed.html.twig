@@ -6,7 +6,7 @@
   var models = window["powerbi-client"].models;
 
   // Function to parse the report filter string
-  function parseReportFilter(filterStr) {
+function parseReportFilter(filterStr) {
   var filters = [];
   // Remove 'filter=' if present
   if (filterStr.startsWith('filter=')) {
@@ -14,30 +14,60 @@
   }
 
   // Handle multiple filters separated by ' and '
+  // e.g., filter=Locations/State in ('Texas', 'North Dakota')
   var filterExpressions = filterStr.split(' and ');
   filterExpressions.forEach(function(expression) {
-    var parts = expression.split(' eq ');
-    if (parts.length === 2) {
-      var target = parts[0].split('/');
-      var table = target[0];
-      var column = target[1];
-      var value = parts[1].replace(/^'|'$/g, ''); // Remove quotes
+    if (expression.includes(' in ')) {
+      // Handle "in" operator with multiple values
+      var parts = expression.split(' in ');
+      if (parts.length === 2) {
+        var target = parts[0].split('/');
+        var table = target[0];
+        var column = target[1];
+        // Extract values by removing parentheses and splitting by comma
+        var valuesString = parts[1].replace(/^\(|\)$/g, '').split(',');
+        var values = valuesString.map(function(value) {
+          return value.trim().replace(/^'|'$/g, ''); // Remove whitespace and quotes
+        });
 
-      var filter = {
-        $schema: "http://powerbi.com/product/schema#basic",
-        target: {
-          table: table,
-          column: column
-        },
-        operator: "In",
-        values: [value]
-      };
+        var filter = {
+          $schema: "http://powerbi.com/product/schema#basic",
+          target: {
+            table: table,
+            column: column
+          },
+          operator: "In",
+          values: values
+        };
 
-      filters.push(filter);
+        filters.push(filter);
+      }
+    } else {
+      // Handle equality operators
+      var parts = expression.split(' eq ');
+      if (parts.length === 2) {
+        var target = parts[0].split('/');
+        var table = target[0];
+        var column = target[1];
+        var value = parts[1].replace(/^'|'$/g, ''); // Remove quotes
+
+        var filter = {
+          $schema: "http://powerbi.com/product/schema#basic",
+          target: {
+            table: table,
+            column: column
+          },
+          operator: "In",
+          values: [value]
+        };
+
+        filters.push(filter);
+      }
     }
   });
   return filters;
 }
+
 
 
   var filters = [];
@@ -47,7 +77,7 @@
   {% endif %}
   
   var embedSettings = {
-    filterPaneEnabled: false // Disable the Filter pane
+    filterPaneEnabled: {{ filter_pane_enabled ? 'true' : 'false' }}
   };
 
   var reportContainer = $("#pbi-{{ field_name }}-{{ report_id }}").get(0);
